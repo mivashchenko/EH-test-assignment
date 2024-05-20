@@ -1,0 +1,61 @@
+
+.root {
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  border-radius: 16px;
+  padding: 32px 24px 32px 24px;
+  gap: 8px;
+  border: 1px solid #D0D2D3;
+
+  position: relative;
+  top: -32px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+
+  box-shadow: 4px 8px 8px 0px #00000040;
+
+}
+
+.price {
+  font-size: 30px;
+  font-weight: $fontWeightBold;
+  color: $grey3;
+}
+
+.address {
+  font-size: 14px;
+  font-weight: $fontWeightBold;
+  line-height: 14px;
+  text-align: left;
+  color: $grey3;
+}
+
+.description {
+  font-size: 12px;
+  font-weight: $fontWeightLight;
+  line-height: 12px;
+  text-align: left;
+  font-variant: small-caps;
+
+  color: $grey3;
+}
+
+.iconLabelContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $white;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+
+  &_block {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,24 @@
+
+$gap: 16px;
+
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(50% - $gap), 1fr));
+  grid-gap: $gap;
+}
+
+.item {
+  border-radius: 8px;
+  box-shadow: 6px 8px 16px 0 rgba($black, 70%);
+  transition: box-shadow 0.375s ease-in-out;
+
+  &:hover {
+    box-shadow: 6px 8px 16px 0 rgba($black, 90%);
+    cursor: pointer;
+  }
+}
+
+.selected {
+  outline: $primary  solid 2px;
+}
+

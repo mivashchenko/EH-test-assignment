@@ -1,0 +1,21 @@
+.header {
+  grid-area: header;
+  padding: 6px 16px 6px 16px;
+  box-shadow: 0 4px 4px 0 rgba($black, 25%);
+}
+
+.container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "content";
+  grid-template-columns: 1fr;
+  grid-template-rows: 40px auto;
+}
+
+.content {
+  grid-area: content;
+  padding: 16px;
+  display: flex;
+}

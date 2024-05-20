@@ -1,0 +1,35 @@
+
+.root {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 5px 4px 5px 8px;
+  border-radius: 19px;
+  border: 1px solid $grey1;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  margin-left: 12px;
+  font-variant: small-caps;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  text-align: left;
+
+  &::placeholder {
+    font-weight: $fontWeightMedium;
+    color: $grey2;
+  }
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.search-icon {
+
+}

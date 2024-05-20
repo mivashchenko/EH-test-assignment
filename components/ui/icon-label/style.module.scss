@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  gap: 8px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: $fontWeightMedium;
+  font-variant: small-caps;
+  background: rgba($black, 20%);
+}
+
+.bg_grey {
+  background: rgba($black, 20%);
+}
+
+.bg_white {
+  background: $white;
+}
+
+.bg_transparent {
+  background: transparent;
+}

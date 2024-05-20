@@ -1,0 +1,142 @@
+.propertyCard {
+  width: 100%;
+  position: relative;
+
+  border-radius: 8px;
+  overflow: hidden;
+
+
+}
+
+
+
+.head {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.headLabels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1px;
+}
+
+.content {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.propertyImageWrapper {
+  position: relative;
+  width: 100%;
+
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0) 45%);
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &::after {
+      cursor: pointer;
+      //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+      opacity: 0;
+    }
+  }
+
+  & img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+.propertyCard img {
+  width: 100%;
+  height: auto;
+}
+
+.propertyInfo {
+  //padding: 10px 0;
+}
+
+.badge {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: $white;
+  padding: 4px 8px;
+  border-radius: 14px;
+  background: $secondary;
+  border: 1px solid $primary;
+}
+
+.price {
+  font-size: 30px;
+  font-weight: $fontWeightBold;
+  color: $white;
+}
+
+.address {
+  font-size: 14px;
+  font-weight: $fontWeightBold;
+  line-height: 14px;
+  text-align: left;
+  color: $white;
+}
+
+.description {
+  font-size: 12px;
+  font-weight: $fontWeightLight;
+  line-height: 12px;
+  text-align: left;
+  font-variant: small-caps;
+
+  color: $white;
+}
+
+.floorPlanDetails {
+  display: flex;
+  gap: 8px;
+  color: $white;
+}
+
+.floorPlanDetailsItem {
+  border-radius: 4px;
+  background: rgba($white, 10%);
+  padding: 4px 8px;
+  font-size: 12px;
+  color: $white;
+}
+
+.floorPlanDetailsItemValue {
+  font-weight: $fontWeightMedium;
+}
+
+.floorPlanDetailsItemUnit {
+  text-transform: uppercase;
+  font-weight: $fontWeightLight;
+}

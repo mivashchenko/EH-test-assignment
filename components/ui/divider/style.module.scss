@@ -1,0 +1,23 @@
+.root {
+  border-color: #D0D2D3;
+  border-style: solid;
+}
+
+
+.horizontal {
+  flex-shrink: 0;
+  border-width: 0;
+  border-bottom-width: thin;
+  margin: 0;
+}
+
+.vertical {
+  flex-shrink: 0;
+  border-width: 0;
+
+
+  margin: 8px 0;
+  height: auto;
+  border-right-width: thin;
+  align-self: stretch;
+}
