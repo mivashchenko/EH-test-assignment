@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 
-import styles from './style.module.scss'
+import styles from './Divider.module.scss'
 interface DividerProps {
   direction: 'horizontal' | 'vertical'
 }

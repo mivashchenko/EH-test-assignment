@@ -1,0 +1,56 @@
+.root {
+  background: #F9F9F9;
+}
+
+.PropertyDetails_CarouselWrapper {
+  padding: 0 16px 32px;
+}
+
+.PropertyDetails_NeighborhoodName {
+  padding: 32px 16px 16px;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: $fontWeightMedium;
+  color: $grey3;
+}
+
+.imageTitleWrapper {
+  width: 100%;
+
+  & img {
+    display: block;
+    aspect-ratio: 720/448;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.droneImageWrapper {
+  width: 100%;
+
+  & img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.carouselImage {
+  & img {
+    display: block;
+    aspect-ratio: 688 / 448;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.carouselImageWrapper {
+  & img {
+    display: block;
+    aspect-ratio: 756/1092;
+    width: 100%;
+    height: auto;
+  }
+}
+
+

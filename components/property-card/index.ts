@@ -1,11 +1,10 @@
 export {
   PropertyCardHead,
-  PropertyCardHeadItem,
   PropertyCardImage,
   PropertyCardContent,
-  PropertyCardBadge,
+  PropertyCardStatusLabel,
   PropertyCardPrice,
   PropertyCardAddress,
   PropertyCardDescription,
-  PropertyCardFloorPlanDetails,
+  PropertyCardChipContainer,
 } from './property-card'

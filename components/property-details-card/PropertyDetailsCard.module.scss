@@ -1,0 +1,133 @@
+
+.root {
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  border-radius: 16px;
+  padding: 32px 24px 32px 24px;
+  gap: 8px;
+  border: 1px solid #D0D2D3;
+
+  position: relative;
+  top: -32px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+
+  box-shadow: 4px 8px 8px 0px #00000040;
+
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.headerClosing {
+  display: flex;
+  flex-direction: column;
+    align-items: flex-end;
+  justify-content: flex-end;
+
+  &Label {
+    font-size: 12px;
+    font-weight: $fontWeightRegular;
+    color: $grey3;
+    text-transform: uppercase;
+  }
+
+  &Value {
+    font-size: 16px;
+    font-weight: $fontWeightBold;
+    color: $grey3;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+}
+
+.price {
+  font-size: 30px;
+  font-weight: $fontWeightBold;
+  color: $grey3;
+}
+
+.address {
+  font-size: 14px;
+  font-weight: $fontWeightBold;
+  line-height: 14px;
+  text-align: left;
+  color: $grey3;
+}
+
+.description {
+  font-size: 12px;
+  font-weight: $fontWeightLight;
+  line-height: 12px;
+  text-align: left;
+  font-variant: small-caps;
+
+  color: $grey3;
+}
+
+.iconLabelContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $white;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  gap: 8px;
+
+  &_block {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+}
+
+.dataGridContainer {
+  width: 100%;
+  border: 1px solid $grey1;
+  border-radius: 8px;
+  background: rgba($primary, 0.1);
+}
+
+.dataGridRow {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid $grey1;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+
+  &Cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+  }
+}
+
+.dataGridRowCellLabel {
+  font-size: 12px;
+  font-weight: $fontWeightRegular;
+  color: $grey3;
+  text-transform: uppercase;
+}
+
+.dataGridRowCellValue {
+  font-size: 16px;
+  font-weight: $fontWeightBold;
+  color: $grey3;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+

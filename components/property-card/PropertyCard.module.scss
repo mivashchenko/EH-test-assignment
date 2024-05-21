@@ -1,4 +1,4 @@
-.propertyCard {
+.root {
   width: 100%;
   position: relative;
 
@@ -7,8 +7,6 @@
 
 
 }
-
-
 
 .head {
   position: absolute;
@@ -41,7 +39,7 @@
   gap: 8px;
 }
 
-.propertyImageWrapper {
+.imageWrapper {
   position: relative;
   width: 100%;
 
@@ -56,16 +54,7 @@
     bottom: 0;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0) 45%);
     transition: opacity 0.5s ease-in-out;
-  }
-
-  &:hover {
-    cursor: pointer;
-
-    &::after {
-      cursor: pointer;
-      //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-      opacity: 0;
-    }
+    opacity: 1;
   }
 
   & img {
@@ -84,7 +73,7 @@
   //padding: 10px 0;
 }
 
-.badge {
+.statusLabel {
   text-transform: uppercase;
   font-size: 10px;
   color: $white;
@@ -118,13 +107,13 @@
   color: $white;
 }
 
-.floorPlanDetails {
+.chipContainer {
   display: flex;
   gap: 8px;
   color: $white;
 }
 
-.floorPlanDetailsItem {
+.chip {
   border-radius: 4px;
   background: rgba($white, 10%);
   padding: 4px 8px;
@@ -132,11 +121,11 @@
   color: $white;
 }
 
-.floorPlanDetailsItemValue {
+.chipValue {
   font-weight: $fontWeightMedium;
 }
 
-.floorPlanDetailsItemUnit {
+.chipUnit {
   text-transform: uppercase;
   font-weight: $fontWeightLight;
 }

@@ -4,10 +4,11 @@ import { SearchInput } from '@/components/ui/search-input'
 import { PropertyList } from '@/components/property-list'
 import { filterPropertiesByAvailableLot } from '@/utils/filterPropertiesByAvailableLot'
 
-import styles from './style.module.scss'
+import styles from './components/PropertyGallery.module.scss'
 import { Property } from '@/types'
 import { PropertyDetails } from '@/components/property-details'
 import { useCallback, useState } from 'react'
+import { PropertyGalleryLayout } from '@/components/property-gallery/components/property-gallery-layout'
 
 interface PropertyGalleryProps {
   propertyList: Property[]
@@ -24,22 +25,22 @@ export const PropertyGallery = ({
   }, [])
 
   return (
-    <div className={styles.root}>
-      <div className={styles.contentLeft}>
-        <div className={styles.inputWrapper}>
-          <SearchInput
-            placeholder={'Search by Neighborhood Name or Street Name'}
-          />
-        </div>
+    <PropertyGalleryLayout
+      searchComponent={
+        <SearchInput
+          placeholder={'Search by Neighborhood Name or Street Name'}
+        />
+      }
+      listComponent={
         <PropertyList
           propertyList={filterPropertiesByAvailableLot(propertyList)}
           onSelectProperty={handleSelectProperty}
           selectedProperty={selectedProperty}
         />
-      </div>
-      <div className={styles.contentRight}>
-        {selectedProperty && <PropertyDetails property={selectedProperty} />}
-      </div>
-    </div>
+      }
+      detailsComponent={
+        selectedProperty && <PropertyDetails property={selectedProperty} />
+      }
+    />
   )
 }

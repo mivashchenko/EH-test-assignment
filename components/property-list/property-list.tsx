@@ -2,10 +2,10 @@
 
 import {
   PropertyCardAddress,
-  PropertyCardBadge,
+  PropertyCardStatusLabel,
   PropertyCardContent,
   PropertyCardDescription,
-  PropertyCardFloorPlanDetails,
+  PropertyCardChipContainer,
   PropertyCardHead,
   PropertyCardImage,
   PropertyCardPrice,
@@ -13,15 +13,15 @@ import {
 import { Property } from '@/types'
 import pluralize from 'pluralize'
 
-import styles from './style.module.scss'
-import { FloorPlanIcon, PaintBrushIcon } from '@/components/ui/icons/icons'
+import styles from './PropertyList.module.scss'
 import {
   PropertyCard,
-  PropertyCardHeadLabelsContainer,
+  PropertyCardHeadLabels,
 } from '@/components/property-card/property-card'
 import { getPropertyImageUrl } from '@/utils/getPropertyImageUrl'
 import { clsx } from 'clsx'
 import { IconLabel } from '@/components/ui/icon-label/icon-label'
+import { Icons } from '@/components/ui/icons'
 
 interface PropertyListProps {
   propertyList: Property[]
@@ -34,7 +34,7 @@ export const PropertyList = ({
   onSelectProperty,
   selectedProperty,
 }: PropertyListProps) => {
-  console.log(propertyList)
+  // console.log(propertyList)
 
   const createCardClickHandler = (property: Property) => {
     return () => {
@@ -84,26 +84,20 @@ export const PropertyList = ({
               }
             >
               <PropertyCardHead>
-                <PropertyCardHeadLabelsContainer>
-                  <IconLabel
-                    icon={<FloorPlanIcon />}
-                    value={property?.floorPlan?.name}
-                    background={'grey'}
-                  />
-                  <IconLabel
-                    icon={<PaintBrushIcon />}
-                    value={property?.houseStyle?.name}
-                    background={'grey'}
-                  />
-                </PropertyCardHeadLabelsContainer>
+                <PropertyCardHeadLabels
+                  floorPlanName={property?.floorPlan?.name}
+                  houseStyleName={property?.houseStyle?.name}
+                />
               </PropertyCardHead>
-              <PropertyCardImage image={getPropertyImageUrl(property)} />
+              <PropertyCardImage src={getPropertyImageUrl(property)} />
               <PropertyCardContent>
-                <PropertyCardBadge content={property.constructionStatus} />
+                <PropertyCardStatusLabel
+                  content={property.constructionStatus}
+                />
                 <PropertyCardPrice content={property.price} />
                 <PropertyCardAddress content={property.streetAddress} />
                 <PropertyCardDescription content={property.neighborhood.name} />
-                <PropertyCardFloorPlanDetails details={details} />
+                <PropertyCardChipContainer details={details} />
               </PropertyCardContent>
             </PropertyCard>
           </article>

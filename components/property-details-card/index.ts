@@ -1,8 +1,16 @@
 export {
   PropertyDetailsCard,
+  PropertyDetailsCardHeader,
+  PropertyDetailsCardHeaderClosing,
   PropertyDetailsCardPrice,
   PropertyDetailsCardAddress,
   PropertyDetailsCardDescription,
   PropertyDetailsCardIconLabelContainer,
   PropertyDetailsCardButtonContainer,
+  PropertyDetailsCardButtonContainerBlock,
+  PropertyDetailsCardDataGridContainer,
+  PropertyDetailsCardDataGridRow,
+  PropertyDetailsCardDataGridRowCell,
+  PropertyDetailsCardDataGridRowCellLabel,
+  PropertyDetailsCardDataGridRowCellValue,
 } from './property-details-card'

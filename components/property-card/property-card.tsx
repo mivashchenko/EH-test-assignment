@@ -1,40 +1,76 @@
-import styles from './style.module.scss'
-import { ReactNode } from 'react'
+import styles from './PropertyCard.module.scss'
+import { PropsWithChildren, ReactNode } from 'react'
 import { clsx } from 'clsx'
+import { IconLabel } from '@/components/ui/icon-label'
+import { Icons } from '@/components/ui/icons'
 
 interface PropertyCardProps {
   children: ReactNode
   selected?: boolean
 }
 
-export const PropertyCard = ({ children, selected }: PropertyCardProps) => {
+export const PropertyCard = ({ children }: PropertyCardProps) => {
+  return <div className={clsx(styles.root)}>{children}</div>
+}
+
+const PropertyCardHead = ({ children }: PropsWithChildren) => {
+  return <div className={styles.head}>{children}</div>
+}
+
+interface PropertyCardHeadLabelsProps {
+  floorPlanName: string | undefined
+  houseStyleName: string | undefined
+}
+
+const PropertyCardHeadLabels = ({
+  floorPlanName,
+  houseStyleName,
+}: PropertyCardHeadLabelsProps) => {
   return (
-    <div className={clsx(styles.propertyCard)}>
-      <div className={clsx(selected && styles.selected)}>{children}</div>
+    <div className={styles.headLabels}>
+      <IconLabel
+        icon={<Icons.FloorPlan />}
+        value={floorPlanName}
+        background={'grey'}
+      />
+      <IconLabel
+        icon={<Icons.PaintBrush />}
+        value={houseStyleName}
+        background={'grey'}
+      />
     </div>
   )
 }
 
-const PropertyCardImage = ({ image }: { image?: string }) => {
+interface PropertyCardImageProps {
+  src?: string
+}
+
+const PropertyCardImage = ({ src }: PropertyCardImageProps) => {
   return (
-    <figure className={styles.propertyImageWrapper}>
-      <img
-        src={image}
-        alt={'property.titleImage?.alt || property.floorPlan?.titleImage?.alt'}
-      />
+    <figure className={styles.imageWrapper}>
+      <img src={src} alt={'Property card image'} />
     </figure>
   )
 }
 
-const PropertyCardContent = ({ children }: { children: ReactNode }) => {
+const PropertyCardContent = ({ children }: PropsWithChildren) => {
   return <div className={styles.content}>{children}</div>
 }
 
-const PropertyCardBadge = ({ content }: { content: string }) => {
-  return <span className={styles.badge}>{content}</span>
+interface PropertyCardChipProps {
+  content: string
 }
 
-const PropertyCardPrice = ({ content }: { content: number }) => {
+const PropertyCardStatusLabel = ({ content }: PropertyCardChipProps) => {
+  return <span className={styles.statusLabel}>{content}</span>
+}
+
+interface PropertyCardPriceProps {
+  content: number
+}
+
+const PropertyCardPrice = ({ content }: PropertyCardPriceProps) => {
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -44,62 +80,68 @@ const PropertyCardPrice = ({ content }: { content: number }) => {
   return <h3 className={styles.price}>{formattedPrice}</h3>
 }
 
-const PropertyCardAddress = ({ content }: { content: string }) => {
+interface PropertyCardAddressProps {
+  content: string
+}
+
+const PropertyCardAddress = ({ content }: PropertyCardAddressProps) => {
   return <p className={styles.address}>{content}</p>
 }
 
-const PropertyCardDescription = ({ content }: { content: string }) => {
+interface PropertyCardDescriptionProps {
+  content: string
+}
+
+const PropertyCardDescription = ({ content }: PropertyCardDescriptionProps) => {
   return <p className={styles.description}>{content}</p>
 }
 
-const PropertyCardFloorPlanDetails = ({
-  details,
-}: {
+export const PropertyCardChipValue = ({ content }: { content: number }) => {
+  return <span className={styles.chipValue}>{content}</span>
+}
+
+export const PropertyCardChipUnit = ({ content }: { content: string }) => {
+  return <span className={styles.chipUnit}>{content}</span>
+}
+
+export const PropertyCardChip = ({ children }: PropsWithChildren) => {
+  return <span className={styles.chip}>{children}</span>
+}
+
+interface PropertyCardFloorPlanDetailsProps {
   details: {
     value?: number
     unit?: string
   }[]
-}) => {
+}
+
+const PropertyCardChipContainer = ({
+  details,
+}: PropertyCardFloorPlanDetailsProps) => {
   return (
-    <p className={styles.floorPlanDetails}>
+    <p className={styles.chipContainer}>
       {details.map((detail, idx) => {
-        if (!detail.value) return null
+        if (!detail.value || !detail.unit) return null
         return (
-          <span key={idx} className={styles.floorPlanDetailsItem}>
-            <span className={styles.floorPlanDetailsItemValue}>
-              {detail.value}
-            </span>
+          <PropertyCardChip key={idx}>
+            <PropertyCardChipValue content={detail.value} />
             &nbsp;
-            <span className={styles.floorPlanDetailsItemUnit}>
-              {detail.unit}
-            </span>
-          </span>
+            <PropertyCardChipUnit content={detail.unit} />
+          </PropertyCardChip>
         )
       })}
     </p>
   )
 }
 
-const PropertyCardHead = ({ children }: { children: ReactNode }) => {
-  return <div className={styles.head}>{children}</div>
-}
-
-const PropertyCardHeadLabelsContainer = ({
-  children,
-}: {
-  children: ReactNode
-}) => {
-  return <div className={styles.headLabels}>{children}</div>
-}
-
 export {
   PropertyCardHead,
-  PropertyCardHeadLabelsContainer,
+  PropertyCardHeadLabels,
   PropertyCardImage,
   PropertyCardContent,
-  PropertyCardBadge,
+  PropertyCardStatusLabel,
   PropertyCardPrice,
   PropertyCardAddress,
   PropertyCardDescription,
-  PropertyCardFloorPlanDetails,
+  PropertyCardChipContainer,
 }

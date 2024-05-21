@@ -1,6 +1,6 @@
 'use client'
 
-export const SearchIcon = () => {
+export const Search = () => {
   return (
     <svg
       width='16'
@@ -18,7 +18,7 @@ export const SearchIcon = () => {
   )
 }
 
-export const FloorPlanIcon = () => {
+export const FloorPlan = () => {
   return (
     <svg
       width='17'
@@ -45,7 +45,7 @@ export const FloorPlanIcon = () => {
   )
 }
 
-export const FloorPlanColoredIcon = () => {
+export const FloorPlanColored = () => {
   return (
     <svg
       width='22'
@@ -118,7 +118,7 @@ export const FloorPlanColoredIcon = () => {
   )
 }
 
-export const PaintBrushIcon = () => {
+export const PaintBrush = () => {
   return (
     <svg
       width='17'
@@ -155,7 +155,7 @@ export const PaintBrushIcon = () => {
   )
 }
 
-export const PaintBrushColoredIcon = () => {
+export const PaintBrushColored = () => {
   return (
     <svg
       width='20'
@@ -178,4 +178,12 @@ export const PaintBrushColoredIcon = () => {
       />
     </svg>
   )
+}
+
+export default {
+  Search,
+  FloorPlan,
+  FloorPlanColored,
+  PaintBrush,
+  PaintBrushColored,
 }
