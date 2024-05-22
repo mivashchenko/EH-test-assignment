@@ -1,7 +1,7 @@
 import { EmblaOptionsType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useDotButton } from '@/components/ui/carousel/hooks/use-dot-button'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 
 type PropType = {
   slides: ReactNode[]

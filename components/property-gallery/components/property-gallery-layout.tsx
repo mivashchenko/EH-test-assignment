@@ -57,14 +57,16 @@ export const PropertyGalleryLayout = ({
 
   return (
     <div className={styles.root}>
-      <div
-        style={{
-          overflow: mode === 'mobile' && detailsComponent ? 'hidden' : 'unset',
-        }}
-        className={clsx(styles.contentLeft)}
-      >
+      <div className={clsx(styles.contentLeft)}>
         <div className={styles.search}>{searchComponent}</div>
-        {listComponent}
+        <div
+          style={{
+            overflow:
+              mode === 'mobile' && detailsComponent ? 'hidden' : 'unset',
+          }}
+        >
+          {listComponent}
+        </div>
       </div>
 
       {mode === 'desktop' && (

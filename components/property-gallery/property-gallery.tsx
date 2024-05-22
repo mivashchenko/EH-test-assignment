@@ -2,12 +2,16 @@
 
 import { SearchInput } from '@/components/ui/search-input'
 import { PropertyList } from '@/components/property-list'
-import { filterPropertiesByAvailableLot } from '@/utils/filterPropertiesByAvailableLot'
+import {
+  filterPropertiesByAvailableLot,
+  filterPropertiesByText,
+} from '@/utils/filterPropertiesByAvailableLot'
 import { Property } from '@/types'
 import { PropertyDetails } from '@/components/property-details'
 import { useCallback, useEffect, useState } from 'react'
 import { PropertyGalleryLayout } from '@/components/property-gallery/components/property-gallery-layout'
 import { useScreenSize } from '@/hooks/useScreenSize'
+import { useTransition } from 'react-spring'
 
 interface PropertyGalleryProps {
   propertyList: Property[]
@@ -21,13 +25,13 @@ export const PropertyGallery = ({
     null
   )
 
+  const [searchText, setSearchText] = useState<string>('')
+
   useEffect(() => {
     if (screenSize.width > 768) {
       setSelectedProperty(propertyList[0])
     }
   }, [])
-
-  const [showDetails, setShowDetails] = useState(true)
 
   const handleSelectProperty = useCallback((property: Property) => {
     setSelectedProperty(property)
@@ -45,18 +49,31 @@ export const PropertyGallery = ({
     setSelectedProperty(null)
   }, [])
 
+  const handleSearchTextChange = useCallback((text: string) => {
+    setSearchText(text)
+  }, [])
+
+  console.log(propertyList)
+
+  const [isPending, startTransition] = useTransition()
+
   return (
     <PropertyGalleryLayout
       mode={screenSize.width <= 768 ? 'mobile' : 'desktop'}
       onBackButtonClick={handleBackButtonClick}
       searchComponent={
         <SearchInput
+          value={searchText}
+          onChange={handleSearchTextChange}
           placeholder={'Search by Neighborhood Name or Street Name'}
         />
       }
       listComponent={
         <PropertyList
-          propertyList={filterPropertiesByAvailableLot(propertyList)}
+          propertyList={filterPropertiesByText(
+            filterPropertiesByAvailableLot(propertyList),
+            searchText
+          )}
           onSelectProperty={handleSelectProperty}
           selectedProperty={selectedProperty}
         />

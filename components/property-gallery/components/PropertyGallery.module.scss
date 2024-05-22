@@ -6,8 +6,14 @@
 }
 
 .search {
-  margin-bottom: 8px;
+  position: sticky;
+  top: 40px;
+  background: white;
+  padding: 0 16px 4px;
+
   flex: 1;
+  z-index: 100;
+  margin:  0 -16px 4px -16px;
 }
 
 .contentLeft {
@@ -54,7 +60,7 @@
 
 @media only screen and (max-width: $screenTablet) {
   .contentLeft {
-    flex-basis: unset;
+    flex-basis: 100%;
   }
 }
 

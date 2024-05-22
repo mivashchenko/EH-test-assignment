@@ -20,7 +20,8 @@
     "react-aria": "^3.33.0",
     "react-dom": "^18",
     "react-resize-detector": "^10.0.1",
-    "react-spring": "^9.7.3"
+    "react-spring": "^9.7.3",
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",

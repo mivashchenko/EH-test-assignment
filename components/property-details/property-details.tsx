@@ -77,9 +77,8 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   ]
 
   const getSalesImages = (property: Property) => {
-    return pathOr([], ['neighborhood', 'salesImages', 0], property).filter(
-      Boolean
-    )
+    const image = path(['neighborhood', 'salesImages', 0], property)
+    return [image].filter(Boolean)
   }
 
   const getDroneImages = (property: Property) => {
@@ -207,7 +206,11 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   const renderCarouselButton =
     (buttonLabelFormatter: (index: number) => string) =>
     (index: number, selectedIndex: number, onDotButtonClick: () => void) => (
-      <Button onClick={onDotButtonClick} active={index === selectedIndex}>
+      <Button
+        key={index}
+        onClick={onDotButtonClick}
+        active={index === selectedIndex}
+      >
         {buttonLabelFormatter(index)}
       </Button>
     )
