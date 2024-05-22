@@ -224,7 +224,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <>
         {renderCarouselTitle(property?.floorPlan?.name)}
-        <div className={styles.PropertyDetails_CarouselWrapper}>
+        <div className={styles.carouselWrapper}>
           <Carousel
             slides={slides}
             buttonWrapperRenderer={renderCarouselButtonGroup}
@@ -244,7 +244,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <>
         {renderCarouselTitle(property?.neighborhood?.name)}
-        <div className={styles.PropertyDetails_CarouselWrapper}>
+        <div className={styles.carouselWrapper}>
           <Carousel
             slides={slides}
             buttonWrapperRenderer={renderCarouselButtonGroup}
@@ -262,7 +262,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       <>
         {renderCarouselTitle('neighborhood layout')}
 
-        <div className={styles.PropertyDetails_CarouselWrapper}>
+        <div className={styles.carouselWrapper}>
           <Carousel
             slides={getDroneImages(property).map((attachment) =>
               renderSliderImage({ attachment, width: 688, height: 448 })
@@ -284,7 +284,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <>
         {renderCarouselTitle('other neighborhood images')}
-        <div className={styles.PropertyDetails_CarouselWrapper}>
+        <div className={styles.carouselWrapper}>
           <Carousel
             slides={slides}
             buttonWrapperRenderer={renderCarouselButtonGroup}
