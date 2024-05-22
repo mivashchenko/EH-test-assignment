@@ -100,11 +100,11 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
                 {item.label}
               </PropertyDetailsCardDataGridRowCellLabel>
               <PropertyDetailsCardDataGridRowCellValue>
-                {item.value}
+                {item.value || 'N/A'}
               </PropertyDetailsCardDataGridRowCellValue>
             </PropertyDetailsCardDataGridRowCell>
             {cells.length === 2 && index === 0 && (
-              <Divider direction={'vertical'} />
+              <Divider className={styles.divider} direction={'vertical'} />
             )}
           </>
         ))}
@@ -247,7 +247,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
           }}
           buttonRenderer={(index: number, selectedIndex, onDotButtonClick) => (
             <Button onClick={onDotButtonClick} active={index === selectedIndex}>
-              {getOrdinalSuffix(index + 1)}&nbsp;Floor
+              {getOrdinalSuffix(index + 1)}
             </Button>
           )}
         />

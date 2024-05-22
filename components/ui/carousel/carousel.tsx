@@ -1,7 +1,6 @@
 import { EmblaOptionsType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useDotButton } from '@/components/ui/carousel/hooks/use-dot-button'
-import { DotButton } from '@/components/ui/carousel/components/dot-button'
 import { ReactNode } from 'react'
 
 type PropType = {

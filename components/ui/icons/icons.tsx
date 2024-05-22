@@ -1,6 +1,6 @@
 'use client'
 
-export const Search = () => {
+const Search = () => {
   return (
     <svg
       width='16'
@@ -18,7 +18,7 @@ export const Search = () => {
   )
 }
 
-export const FloorPlan = () => {
+const FloorPlan = () => {
   return (
     <svg
       width='17'
@@ -45,7 +45,7 @@ export const FloorPlan = () => {
   )
 }
 
-export const FloorPlanColored = () => {
+const FloorPlanColored = () => {
   return (
     <svg
       width='22'
@@ -118,7 +118,7 @@ export const FloorPlanColored = () => {
   )
 }
 
-export const PaintBrush = () => {
+const PaintBrush = () => {
   return (
     <svg
       width='17'
@@ -155,7 +155,7 @@ export const PaintBrush = () => {
   )
 }
 
-export const PaintBrushColored = () => {
+const PaintBrushColored = () => {
   return (
     <svg
       width='20'
@@ -180,10 +180,47 @@ export const PaintBrushColored = () => {
   )
 }
 
+const BackButton = () => {
+  return (
+    <svg
+      width='12'
+      height='12'
+      viewBox='0 0 12 12'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <g clipPath='url(#clip0_34_5153)'>
+        <g clipPath='url(#clip1_34_5153)'>
+          <path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M8.70347 11.2071C8.3081 11.5976 7.66708 11.5976 7.27171 11.2071L2 5.99996L7.27172 0.792889C7.66709 0.402366 8.30811 0.40237 8.70348 0.792901C9.09885 1.18343 9.09884 1.8166 8.70347 2.20712L4.86353 5.99997L8.70347 9.79288C9.09884 10.1834 9.09884 10.8166 8.70347 11.2071Z'
+            fill='white'
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath id='clip0_34_5153'>
+          <rect width='12' height='12' fill='white' />
+        </clipPath>
+        <clipPath id='clip1_34_5153'>
+          <rect
+            width='12'
+            height='12'
+            fill='white'
+            transform='translate(12 12) rotate(-180)'
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
 export default {
   Search,
   FloorPlan,
   FloorPlanColored,
   PaintBrush,
   PaintBrushColored,
+  BackButton,
 }

@@ -7,13 +7,16 @@ export default async function Home() {
   const propertyList = await getPropertyList()
 
   return (
-    <main className={styles.container}>
-      <header className={styles.header}>
-        <Logo />
-      </header>
-      <section className={styles.content}>
-        <PropertyGallery propertyList={propertyList} />
-      </section>
-    </main>
+    <>
+      <main className={styles.container}>
+        <header className={styles.header}>
+          <Logo />
+        </header>
+        <section className={styles.content}>
+          <PropertyGallery propertyList={propertyList} />
+        </section>
+      </main>
+      <div id='modal-root'></div>
+    </>
   )
 }

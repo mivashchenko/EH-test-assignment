@@ -2,12 +2,15 @@
 $gap: 16px;
 
 .root {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(calc(50% - $gap), 1fr));
-  grid-gap: $gap;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  width: 100%;
+  height: 100%;
 }
 
 .item {
+  flex-basis: calc(50% - #{$gap});
   border-radius: 8px;
   box-shadow: 6px 8px 16px 0 rgba($black, 70%);
   transition: box-shadow 0.375s ease-in-out;
@@ -15,6 +18,12 @@ $gap: 16px;
   &:hover {
     cursor: pointer;
     box-shadow: 6px 8px 16px 0 rgba($black, 90%);
+  }
+}
+
+@media only screen and (max-width: $screenDesktop) {
+  .item {
+    flex-basis: 100%;
   }
 }
 

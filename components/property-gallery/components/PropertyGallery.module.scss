@@ -2,14 +2,61 @@
 .root {
   display: flex;
   gap: 16px;
-
-}
-
-.content {
-  width: 50%;
+  width: 100%;
 }
 
 .search {
   margin-bottom: 8px;
+  flex: 1;
 }
+
+.contentLeft {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+}
+
+.contentRightDesktop {
+  position: sticky;
+  bottom: 0;
+  align-self: flex-end;
+  flex-basis: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contentRightMobile {
+  position: fixed;
+  padding-top: 42px;
+  background: $white;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 20;
+}
+
+.backButtonContainer {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 30;
+}
+
+.item {
+  position: relative;
+  //left: -100%;
+  opacity: 1;
+}
+
+
+@media only screen and (max-width: $screenTablet) {
+  .contentLeft {
+    flex-basis: unset;
+  }
+}
+
+
 

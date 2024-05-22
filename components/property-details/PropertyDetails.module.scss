@@ -53,4 +53,12 @@
   }
 }
 
+@media only screen and (max-width: $screenTablet) {
+  .divider {
+    display: none;
+  }
+}
+
+
+
 

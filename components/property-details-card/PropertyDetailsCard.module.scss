@@ -27,7 +27,7 @@
 .headerClosing {
   display: flex;
   flex-direction: column;
-    align-items: flex-end;
+  align-items: flex-end;
   justify-content: flex-end;
 
   &Label {
@@ -130,4 +130,29 @@
   margin-top: 4px;
 }
 
+
+@media only screen and (max-width: $screenTablet) {
+  .dataGridRow {
+    flex-wrap: wrap;
+  }
+
+  .dataGridRowCell {
+    flex: 1 1 100%;
+
+    &:nth-child(3) {
+      border-top: 1px solid $grey1;
+    }
+
+  }
+
+  .dataGridRowCellLabel {
+    text-align: center;
+  }
+
+  .dataGridRowCellValue {
+    text-align: center;
+  }
+
+
+}
 
