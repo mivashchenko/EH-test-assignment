@@ -111,6 +111,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       attachment?.url && (
         <div className={styles.carouselImage}>
           <Image
+            style={{ aspectRatio: `${width / height}` }}
             src={attachment.url}
             alt='Floor Plan Image'
             width={width}
