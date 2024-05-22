@@ -11,7 +11,7 @@ import { PropertyDetails } from '@/components/property-details'
 import { useCallback, useEffect, useState } from 'react'
 import { PropertyGalleryLayout } from '@/components/property-gallery/components/property-gallery-layout'
 import { useScreenSize } from '@/hooks/useScreenSize'
-import { useTransition } from 'react-spring'
+import { useTransition } from 'react'
 
 interface PropertyGalleryProps {
   propertyList: Property[]
@@ -49,13 +49,24 @@ export const PropertyGallery = ({
     setSelectedProperty(null)
   }, [])
 
+  const [filteredProperties, setFilteredProperties] = useState<Property[]>([])
+
+  const [isPending, startTransition] = useTransition()
+
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text)
   }, [])
 
-  console.log(propertyList)
-
-  const [isPending, startTransition] = useTransition()
+  useEffect(() => {
+    startTransition(() => {
+      setFilteredProperties(
+        filterPropertiesByText(
+          filterPropertiesByAvailableLot(propertyList),
+          searchText
+        )
+      )
+    })
+  }, [searchText, propertyList])
 
   return (
     <PropertyGalleryLayout
@@ -69,14 +80,15 @@ export const PropertyGallery = ({
         />
       }
       listComponent={
-        <PropertyList
-          propertyList={filterPropertiesByText(
-            filterPropertiesByAvailableLot(propertyList),
-            searchText
-          )}
-          onSelectProperty={handleSelectProperty}
-          selectedProperty={selectedProperty}
-        />
+        isPending ? (
+          <div>Loading</div>
+        ) : (
+          <PropertyList
+            propertyList={filteredProperties}
+            onSelectProperty={handleSelectProperty}
+            selectedProperty={selectedProperty}
+          />
+        )
       }
       detailsComponent={
         selectedProperty && <PropertyDetails property={selectedProperty} />
