@@ -12,7 +12,6 @@ interface SearchInputProps {
 export const SearchInput = (props: SearchInputProps) => {
   const ref = useRef(null)
   const { inputProps } = useTextField(props, ref)
-  console.log(inputProps)
   return (
     <div className={styles.root}>
       <div className={styles.icon}>

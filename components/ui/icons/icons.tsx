@@ -216,7 +216,7 @@ const BackButton = () => {
   )
 }
 
-export default {
+export const Icons = {
   Search,
   FloorPlan,
   FloorPlanColored,

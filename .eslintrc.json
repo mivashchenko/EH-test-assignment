@@ -2,7 +2,11 @@
   "extends": [
     "next/core-web-vitals",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "react/display-name": "off",
+    "react-hooks/exhaustive-deps": "off"
+  }
 }
 
 

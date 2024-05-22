@@ -8,7 +8,6 @@ import { PropertyDetails } from '@/components/property-details'
 import { useCallback, useEffect, useState } from 'react'
 import { PropertyGalleryLayout } from '@/components/property-gallery/components/property-gallery-layout'
 import { useScreenSize } from '@/hooks/useScreenSize'
-import { useTransition, animated } from 'react-spring'
 
 interface PropertyGalleryProps {
   propertyList: Property[]

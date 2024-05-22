@@ -120,6 +120,7 @@
   font-weight: $fontWeightRegular;
   color: $grey3;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .dataGridRowCellValue {
@@ -128,6 +129,7 @@
   color: $grey3;
   text-transform: uppercase;
   margin-top: 4px;
+  text-align: center;
 }
 
 
@@ -152,7 +154,5 @@
   .dataGridRowCellValue {
     text-align: center;
   }
-
-
 }
 

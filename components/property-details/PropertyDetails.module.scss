@@ -38,16 +38,6 @@
 .carouselImage {
   & img {
     display: block;
-    aspect-ratio: 688 / 448;
-    width: 100%;
-    height: auto;
-  }
-}
-
-.carouselImageWrapper {
-  & img {
-    display: block;
-    aspect-ratio: 756/1092;
     width: 100%;
     height: auto;
   }

@@ -1,5 +1,6 @@
+'use client'
 import styles from '@/components/property-gallery/components/PropertyGallery.module.scss'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { clsx } from 'clsx'
 import { BackButton } from '@/components/ui/back-button'
 import { animated, useTransition } from 'react-spring'
@@ -26,23 +27,33 @@ export const PropertyGalleryLayout = ({
     }
   }
 
-  const modalRoot = document.getElementById('modal-root')
-
   const transition = useTransition(detailsComponent, {
     from: { opacity: 0, x: -400, y: 0 },
     enter: { opacity: 1, x: 0, y: 0 },
     leave: { opacity: 0, x: -400, y: 0 },
   })
 
-  if (mode === 'mobile' && detailsComponent) {
-    document.body.style.overflow = 'hidden'
-  }
+  const [modalRoot, setModalRoot] = useState<Element | null>(null)
 
   useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
+    if (window === undefined) return
+    setModalRoot(window.document.getElementById('modal-root'))
   }, [])
+
+  useEffect(() => {
+    if (window === undefined) return
+
+    if (mode === 'mobile' && detailsComponent) {
+      window.document.body.style.overflow = 'hidden'
+    } else {
+      window.document.body.style.overflow = 'initial'
+    }
+
+    return () => {
+      if (window === undefined) return
+      window.document.body.style.overflow = 'initial'
+    }
+  }, [detailsComponent, mode])
 
   return (
     <div className={styles.root}>
