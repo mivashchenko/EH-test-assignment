@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display only dividers when rendered with no children 1`] = `
+<div>
+  <hr
+    class="root horizontal"
+  />
+  <div
+    class="iconLabelContainer"
+  />
+  <hr
+    class="root horizontal"
+  />
+</div>
+`;
+
+exports[`should handle null children without crashing 1`] = `
+<div>
+  <hr
+    class="root horizontal"
+  />
+  <div
+    class="iconLabelContainer"
+  />
+  <hr
+    class="root horizontal"
+  />
+</div>
+`;
