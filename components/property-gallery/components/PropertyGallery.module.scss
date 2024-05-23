@@ -45,20 +45,25 @@
 }
 
 .backButtonContainer {
-  position: absolute;
-  top: 8px;
-  left: 8px;
+  position: fixed;
+  top: 40px;
+  left: 0;
   z-index: 30;
+  padding: 8px;
 }
 
 .item {
   position: relative;
-  //left: -100%;
   opacity: 1;
 }
 
 
 @media only screen and (max-width: $screenTablet) {
+  .search {
+    position: initial;
+    z-index: initial;
+  }
+
   .contentLeft {
     flex-basis: 100%;
   }

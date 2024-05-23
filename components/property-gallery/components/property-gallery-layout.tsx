@@ -79,12 +79,12 @@ export const PropertyGalleryLayout = ({
         detailsComponent &&
         createPortal(
           <div className={clsx(styles.contentRightMobile)}>
+            <div className={styles.backButtonContainer}>
+              <BackButton onClick={handleBackButtonClick} />
+            </div>
             {transition((style, item) =>
               item ? (
                 <animated.div style={style} className={styles.item}>
-                  <div className={styles.backButtonContainer}>
-                    <BackButton onClick={handleBackButtonClick} />
-                  </div>
                   {detailsComponent}
                 </animated.div>
               ) : null
