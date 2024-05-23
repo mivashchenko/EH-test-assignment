@@ -37,13 +37,15 @@ export const PropertyGallery = ({
     setSelectedProperty(property)
   }, [])
 
+  const isMobile = screenSize.width <= 768
+
   useEffect(() => {
-    if (screenSize.width <= 768) {
+    if (isMobile) {
       setSelectedProperty(null)
     } else {
       if (selectedProperty === null) setSelectedProperty(propertyList[0])
     }
-  }, [screenSize.width])
+  }, [isMobile])
 
   const handleBackButtonClick = useCallback(() => {
     setSelectedProperty(null)
@@ -64,11 +66,12 @@ export const PropertyGallery = ({
         searchText
       )
       setFilteredProperties(filteredProperties)
-      setSelectedProperty(filteredProperties?.[0])
-    })
-  }, [searchText, propertyList])
 
-  console.log(selectedProperty)
+      if (!isMobile) {
+        setSelectedProperty(filteredProperties?.[0])
+      }
+    })
+  }, [searchText, propertyList, isMobile])
 
   return (
     <PropertyGalleryLayout

@@ -74,7 +74,7 @@ export const PropertyList = ({
 
         return (
           <article
-            key={idx}
+            key={property.streetAddress + idx}
             className={clsx(
               styles.item,
               SelectedProperty.isTheSameAs(IteratedProperty) && styles.selected

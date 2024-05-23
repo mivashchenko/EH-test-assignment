@@ -55,18 +55,21 @@ export const PropertyGalleryLayout = ({
     }
   }, [detailsComponent, mode])
 
+  const renderDetailsComponentModal = () => {
+    return transition((style, item) =>
+      item ? (
+        <animated.div style={style} className={styles.item}>
+          {detailsComponent}
+        </animated.div>
+      ) : null
+    )
+  }
+
   return (
     <div className={styles.root}>
       <div className={clsx(styles.contentLeft)}>
         <div className={styles.search}>{searchComponent}</div>
-        <div
-          style={{
-            overflow:
-              mode === 'mobile' && detailsComponent ? 'hidden' : 'unset',
-          }}
-        >
-          {listComponent}
-        </div>
+        {listComponent}
       </div>
 
       {mode === 'desktop' && (
@@ -82,13 +85,7 @@ export const PropertyGalleryLayout = ({
             <div className={styles.backButtonContainer}>
               <BackButton onClick={handleBackButtonClick} />
             </div>
-            {transition((style, item) =>
-              item ? (
-                <animated.div style={style} className={styles.item}>
-                  {detailsComponent}
-                </animated.div>
-              ) : null
-            )}
+            {renderDetailsComponentModal()}
           </div>,
           modalRoot as Element
         )}

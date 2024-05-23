@@ -3,6 +3,8 @@ import { PropsWithChildren, ReactNode } from 'react'
 import { clsx } from 'clsx'
 import { IconLabel } from '@/components/ui/icon-label'
 import { Icons } from '@/components/ui/icons'
+import Image from 'next/image'
+import { getBlurDataUrl } from '@/utils/dynamicBlurUrl'
 
 interface PropertyCardProps {
   children: ReactNode
@@ -48,8 +50,18 @@ interface PropertyCardImageProps {
 
 const PropertyCardImage = ({ src }: PropertyCardImageProps) => {
   return (
-    <figure className={styles.imageWrapper}>
-      <img src={src} alt={'Property card image'} />
+    <figure
+      className={styles.imageWrapper}
+      style={{ aspectRatio: `${590 / 370}` }}
+    >
+      <Image
+        src={src || '/images/property-card-placeholder.png'}
+        alt={'Property card image'}
+        width={590}
+        height={370}
+        placeholder={'blur'}
+        blurDataURL={getBlurDataUrl()}
+      />
     </figure>
   )
 }

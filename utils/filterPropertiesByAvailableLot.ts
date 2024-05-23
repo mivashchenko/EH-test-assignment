@@ -1,5 +1,5 @@
 import { Property } from '@/types'
-import { filter, includes, path } from 'ramda'
+import { compose, filter, includes, path, toLower, trim } from 'ramda'
 
 export const filterPropertiesByAvailableLot = (properties: Property[]) => {
   if (!properties) return []
@@ -8,15 +8,21 @@ export const filterPropertiesByAvailableLot = (properties: Property[]) => {
   )
 }
 
+const processSearchText = compose(trim, toLower)
+
 export const filterPropertiesByText = (
   data: Property[],
-  searchTerm: string
+  inputText: string
 ): Property[] => {
   return filter((item: any) => {
-    return (
-      includes(searchTerm, path(['streetAddress'], item)) ||
-      includes(searchTerm, path(['neighborhood', 'name'], item)) ||
-      includes(searchTerm, path(['floorPlan', 'name'], item))
-    )
+    const _inputText = processSearchText(inputText)
+
+    const streetAddress = path(['streetAddress'], item)
+    const neighborhoodName = path(['neighborhood', 'name'], item)
+    const floorPlanName = path(['floorPlan', 'name'], item)
+
+    return [streetAddress, neighborhoodName, floorPlanName].some((text) => {
+      return includes(_inputText, processSearchText(text))
+    })
   }, data || [])
 }
