@@ -50,10 +50,7 @@ interface PropertyCardImageProps {
 
 const PropertyCardImage = ({ src }: PropertyCardImageProps) => {
   return (
-    <figure
-      className={styles.imageWrapper}
-      style={{ aspectRatio: `${590 / 370}` }}
-    >
+    <figure className={styles.imageWrapper}>
       <Image
         src={src || '/images/property-card-placeholder.png'}
         alt={'Property card image'}

@@ -10,7 +10,7 @@ $gap: 16px;
 }
 
 .item {
-  flex-basis: calc(50% - #{$gap});
+  width: calc(50% - #{$gap / 2});
   border-radius: 8px;
   box-shadow: 6px 8px 16px 0 rgba($black, 70%);
   transition: box-shadow 0.375s ease-in-out;
