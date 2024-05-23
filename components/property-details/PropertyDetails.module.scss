@@ -6,7 +6,7 @@
   padding: 0 16px 32px;
 }
 
-.PropertyDetails_NeighborhoodName {
+.neighborhoodName {
   padding: 32px 16px 16px;
   text-transform: uppercase;
   text-align: center;
@@ -41,6 +41,16 @@
     width: 100%;
     height: auto;
   }
+}
+
+.floorPlanIconLabelContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.floorPlanIconLabelWrapper {
+  padding: 0 16px;
 }
 
 @media only screen and (max-width: $screenTablet) {

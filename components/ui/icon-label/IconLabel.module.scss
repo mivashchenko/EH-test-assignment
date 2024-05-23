@@ -1,8 +1,8 @@
 .root {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
   gap: 8px;
   padding: 8px;
   font-size: 14px;
@@ -13,10 +13,12 @@
 
 .bgGrey {
   background: rgba($black, 20%);
+  color: $white;
 }
 
 .bgWhite {
   background: $white;
+  color: $grey3
 }
 
 .bgTransparent {

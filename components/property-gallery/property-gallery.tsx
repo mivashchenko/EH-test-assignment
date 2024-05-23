@@ -59,14 +59,16 @@ export const PropertyGallery = ({
 
   useEffect(() => {
     startTransition(() => {
-      setFilteredProperties(
-        filterPropertiesByText(
-          filterPropertiesByAvailableLot(propertyList),
-          searchText
-        )
+      const filteredProperties = filterPropertiesByText(
+        filterPropertiesByAvailableLot(propertyList),
+        searchText
       )
+      setFilteredProperties(filteredProperties)
+      setSelectedProperty(filteredProperties?.[0])
     })
   }, [searchText, propertyList])
+
+  console.log(selectedProperty)
 
   return (
     <PropertyGalleryLayout
@@ -80,15 +82,11 @@ export const PropertyGallery = ({
         />
       }
       listComponent={
-        isPending ? (
-          <div>Loading</div>
-        ) : (
-          <PropertyList
-            propertyList={filteredProperties}
-            onSelectProperty={handleSelectProperty}
-            selectedProperty={selectedProperty}
-          />
-        )
+        <PropertyList
+          propertyList={filteredProperties}
+          onSelectProperty={handleSelectProperty}
+          selectedProperty={selectedProperty}
+        />
       }
       detailsComponent={
         selectedProperty && <PropertyDetails property={selectedProperty} />

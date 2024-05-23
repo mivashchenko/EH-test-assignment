@@ -1,5 +1,4 @@
-import { Amenity, Neighborhood, Property } from '@/types'
-import { getPropertyImageUrl } from '@/utils/getPropertyImageUrl'
+import { Neighborhood, Property } from '@/types'
 import styles from './PropertyDetails.module.scss'
 import {
   PropertyDetailsCard,
@@ -20,43 +19,58 @@ import { IconLabel } from '../ui/icon-label'
 import { Divider } from '@/components/ui/divider'
 import { Button, ButtonGroup } from '@/components/ui/button'
 import { PropertyDetailsCardDataGridContainer } from '@/components/property-details-card/property-details-card'
-import { getLotDimensionFormatted } from '@/utils/text-format'
+import {
+  carouselButtonLabelFormatter,
+  joinWithComma,
+  lotDimensionFormatter,
+} from '@/utils/text-format'
 import { ReactNode } from 'react'
 import { Carousel } from '@/components/ui/carousel'
 import { getOrdinalSuffix } from '@/utils/get-ordinal-suffix'
 import { Icons } from '@/components/ui/icons'
 import Image from 'next/image'
 import { getBlurDataUrl } from '@/utils/dynamicBlurUrl'
-import { pathOr, path } from 'ramda'
+import { pathOr } from 'ramda'
+import {
+  FloorPlanService,
+  NeighborhoodService,
+  PropertyService,
+} from '@/services/property'
 
 interface PropertyDetailsProps {
   property: Property
 }
 
-const N_A = 'N / A'
+const N_A = 'N/A'
 
 export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
+  const Property = new PropertyService()
+  Property.setProperty(property)
+
+  const Neighborhood = new NeighborhoodService()
+  Neighborhood.setNeighborhood(Property.neighborhood)
+
+  const FloorPlan = new FloorPlanService()
+  FloorPlan.setFloorPlan(Property.floorPlan)
+
   const neighborhood = pathOr({} as Neighborhood, ['neighborhood'], property)
 
   const dataGridItems = [
     {
       label: 'school district',
-      value: pathOr(N_A, ['schoolDistrictLocation', 'name'], neighborhood),
+      value: Neighborhood.schoolDistrictLocationName || N_A,
     },
     {
       label: 'elementary',
-      value: pathOr(N_A, ['elementarySchool'], neighborhood),
+      value: Neighborhood.elementarySchool || N_A,
     },
     {
       label: 'lot dimensions',
-      value: getLotDimensionFormatted(
-        path(['lotDimensions', 'width'], property),
-        path(['lotDimensions', 'depth'], property)
-      ),
+      value: Property.getLotDimensionsFormatted(lotDimensionFormatter),
     },
     {
       label: 'lot square footage',
-      value: pathOr(N_A, ['sqFootLot'], property),
+      value: Property.sqFootLot,
     },
     {
       label: 'cross streets',
@@ -64,38 +78,15 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     },
     {
       label: 'amenities',
-      value: pathOr([], ['amenities'], neighborhood)
-        .map((amenity: Amenity) => amenity.name)
-        .join(', '),
+      value: Neighborhood.getAmenityNamesFormatted(joinWithComma),
     },
     {
       label: 'additional info',
-      value: property?.isPoolCompatible
+      value: Property.isPoolCompatible
         ? 'pool compatible'
         : 'not pool compatible',
     },
   ]
-
-  const getSalesImages = (property: Property) => {
-    const image = path(['neighborhood', 'salesImages', 0], property)
-    return [image].filter(Boolean)
-  }
-
-  const getDroneImages = (property: Property) => {
-    return [path(['neighborhood', 'droneImage'], property)].filter(Boolean)
-  }
-
-  const getRestNeighborhoodImages = (property: Property) => {
-    const hasImages = path(['neighborhood', 'salesImages', 1], property)
-
-    if (!hasImages) return []
-    const imagesToRender = path(
-      ['neighborhood', 'salesImages'],
-      property
-    ).slice(1)
-
-    return imagesToRender.filter(Boolean)
-  }
 
   const renderSliderImage = ({
     attachment,
@@ -108,7 +99,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }) => {
     return (
       attachment?.url && (
-        <div className={styles.carouselImage}>
+        <div key={attachment.url} className={styles.carouselImage}>
           <Image
             style={{ aspectRatio: `${width / height}` }}
             src={attachment.url}
@@ -154,22 +145,23 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     )
   }
 
-  const renderDataGridRowList = () =>
-    dataGridItems.reduce(
+  const renderDataGridRowList = () => {
+    return dataGridItems.reduce(
       (accumulator, currentValue, index) => {
-        if (index % 2 === 0) {
+        const hasNextItem = dataGridItems[index + 1]
+        const isOdd = index % 2 !== 0
+
+        if (isOdd) {
           accumulator.currentCellsArray.push(currentValue)
-          if (!dataGridItems[index + 1]) {
-            accumulator.rowsToRender.push(
-              renderDataGridRow(accumulator.currentCellsArray, index)
-            )
+          if (!hasNextItem) {
+            const row = renderDataGridRow(accumulator.currentCellsArray, index)
+            accumulator.rowsToRender.push(row)
             accumulator.currentCellsArray = []
           }
         } else {
           accumulator.currentCellsArray.push(currentValue)
-          accumulator.rowsToRender.push(
-            renderDataGridRow(accumulator.currentCellsArray, index)
-          )
+          const row = renderDataGridRow(accumulator.currentCellsArray, index)
+          accumulator.rowsToRender.push(row)
           accumulator.currentCellsArray = []
         }
 
@@ -180,15 +172,12 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
         rowsToRender: [] as ReactNode[],
       }
     ).rowsToRender
-
-  console.log(property)
+  }
 
   const renderCarouselTitle = (title: string | undefined) => {
     if (!title) return null
 
-    return (
-      <div className={styles.PropertyDetails_NeighborhoodName}>{title}</div>
-    )
+    return <div className={styles.neighborhoodName}>{title}</div>
   }
 
   const renderCarouselButtonGroup = (buttons: ReactNode) => {
@@ -197,10 +186,6 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
         {buttons}
       </ButtonGroup>
     )
-  }
-
-  const carouselButtonLabelFormatter = (index: number) => {
-    return getOrdinalSuffix(index + 1)
   }
 
   const renderCarouselButton =
@@ -220,14 +205,29 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       return `${getOrdinalSuffix(index + 1)} Floor`
     }
 
-    const slides =
-      property?.floorPlan?.images.map((attachment) =>
-        renderSliderImage({ attachment, width: 756, height: 1092 })
-      ) || []
+    const slides = FloorPlan.images.map((attachment) =>
+      renderSliderImage({ attachment, width: 756, height: 1092 })
+    )
 
     return (
       <>
-        {renderCarouselTitle(property?.floorPlan?.name)}
+        {renderCarouselTitle(FloorPlan.name)}
+        <div className={styles.floorPlanIconLabelContainer}>
+          <div className={styles.floorPlanIconLabelWrapper}>
+            <IconLabel icon={<Icons.Square />} value={FloorPlan.name} />
+          </div>
+
+          <Divider direction={'vertical'} />
+          <div className={styles.floorPlanIconLabelWrapper}>
+            <IconLabel icon={<Icons.Bed />} value={Property.houseStyleName} />
+          </div>
+
+          <Divider direction={'vertical'} />
+          <div className={styles.floorPlanIconLabelWrapper}>
+            <IconLabel icon={<Icons.Bath />} value={Property.houseStyleName} />
+          </div>
+        </div>
+
         <div className={styles.carouselWrapper}>
           <Carousel
             slides={slides}
@@ -240,49 +240,43 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }
 
   const renderSalesImageCarousel = () => {
-    if (!getSalesImages(property).length) return null
-
-    const slides = getSalesImages(property).map((attachment) =>
-      renderSliderImage({ attachment, width: 688, height: 448 })
-    )
+    if (!Neighborhood.titleImage) return null
     return (
       <>
-        {renderCarouselTitle(property?.neighborhood?.name)}
+        {renderCarouselTitle(Neighborhood.name)}
         <div className={styles.carouselWrapper}>
-          <Carousel
-            slides={slides}
-            buttonWrapperRenderer={renderCarouselButtonGroup}
-            buttonRenderer={renderCarouselButton(carouselButtonLabelFormatter)}
-          />
+          {renderSliderImage({
+            attachment: Neighborhood.titleImage,
+            width: 688,
+            height: 448,
+          })}
         </div>
       </>
     )
   }
 
   const renderDroneImageCarousel = () => {
-    if (!getDroneImages(property).length) return null
+    if (!Neighborhood.droneImage) return null
 
     return (
       <>
         {renderCarouselTitle('neighborhood layout')}
 
         <div className={styles.carouselWrapper}>
-          <Carousel
-            slides={getDroneImages(property).map((attachment) =>
-              renderSliderImage({ attachment, width: 688, height: 448 })
-            )}
-            buttonWrapperRenderer={renderCarouselButtonGroup}
-            buttonRenderer={renderCarouselButton(carouselButtonLabelFormatter)}
-          />
+          {renderSliderImage({
+            attachment: Neighborhood.droneImage,
+            width: 688,
+            height: 448,
+          })}
         </div>
       </>
     )
   }
 
   const renderNeighborhoodImagesCarousel = () => {
-    if (!getRestNeighborhoodImages(property).length) return null
+    if (!Neighborhood.hasRestNeighborhoodImages) return null
 
-    const slides = getRestNeighborhoodImages(property).map((attachment) =>
+    const slides = Neighborhood.restNeighborhoodImages.map((attachment) =>
       renderSliderImage({ attachment, width: 688, height: 448 })
     )
     return (
@@ -303,7 +297,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <figure className={styles.imageTitleWrapper}>
         <Image
-          src={(property && getPropertyImageUrl(property)) || ''}
+          src={Property.propertyImageUrl}
           alt={'Property Image'}
           width={590}
           height={370}
@@ -318,13 +312,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <PropertyDetailsCardHeader>
         <div>
-          <PropertyDetailsCardPrice content={property.price} />
-          <PropertyDetailsCardAddress content={property.streetAddress} />
+          <PropertyDetailsCardPrice content={Property.price} />
+          <PropertyDetailsCardAddress content={Property.streetAddress} />
         </div>
         <div>
           <PropertyDetailsCardHeaderClosing
             label={'est. closing'}
-            value={property?.estimatedClosingDate}
+            value={Property.estimatedClosingDate}
           />
         </div>
       </PropertyDetailsCardHeader>
@@ -336,13 +330,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       <PropertyDetailsCardIconLabelContainer>
         <IconLabel
           icon={<Icons.FloorPlanColored />}
-          value={property?.floorPlan?.name}
+          value={FloorPlan.name}
           background={'white'}
         />
         <Divider direction={'vertical'} />
         <IconLabel
           icon={<Icons.PaintBrushColored />}
-          value={property?.houseStyle?.name}
+          value={Property.houseStyleName}
           background={'white'}
         />
       </PropertyDetailsCardIconLabelContainer>
@@ -356,7 +350,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
           <Button
             variant={'outlined'}
             onClick={() => {
-              window.open(property?.floorPlan?.tourLink, '_blank')
+              window.open(FloorPlan.tourLink, '_blank')
             }}
           >
             book a tour
@@ -369,6 +363,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       </PropertyDetailsCardButtonContainer>
     )
   }
+  console.log(property)
 
   return (
     <div className={styles.root}>
@@ -376,7 +371,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
 
       <PropertyDetailsCard>
         {renderPropertyCardHeader()}
-        <PropertyDetailsCardDescription content={property.neighborhood.name} />
+        <PropertyDetailsCardDescription content={Neighborhood.name} />
         {renderPropertyCardLabels()}
         {renderPropertyCardButtonContainer()}
 
