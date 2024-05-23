@@ -24,18 +24,16 @@ import {
   joinWithComma,
   lotDimensionFormatter,
 } from '@/utils/text-format'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import { Carousel } from '@/components/ui/carousel'
 import { getOrdinalSuffix } from '@/utils/get-ordinal-suffix'
 import { Icons } from '@/components/ui/icons'
 import Image from 'next/image'
 import { getBlurDataUrl } from '@/utils/dynamicBlurUrl'
 import { pathOr } from 'ramda'
-import {
-  FloorPlanService,
-  NeighborhoodService,
-  PropertyService,
-} from '@/services/property'
+import { PropertyService } from '@/services/property'
+import { NeighborhoodService } from '@/services/neighborhood'
+import { FloorPlanService } from '@/services/floor-plan'
 
 interface PropertyDetailsProps {
   property: Property
@@ -44,33 +42,33 @@ interface PropertyDetailsProps {
 const N_A = 'N/A'
 
 export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
-  const Property = new PropertyService()
-  Property.setProperty(property)
+  const propertyService = new PropertyService()
+  propertyService.setProperty(property)
 
-  const Neighborhood = new NeighborhoodService()
-  Neighborhood.setNeighborhood(Property.neighborhood)
+  const neighborhoodService = new NeighborhoodService()
+  neighborhoodService.setNeighborhood(propertyService.neighborhood)
 
-  const FloorPlan = new FloorPlanService()
-  FloorPlan.setFloorPlan(Property.floorPlan)
+  const floorPlanService = new FloorPlanService()
+  floorPlanService.setFloorPlan(propertyService.floorPlan)
 
   const neighborhood = pathOr({} as Neighborhood, ['neighborhood'], property)
 
   const dataGridItems = [
     {
       label: 'school district',
-      value: Neighborhood.schoolDistrictLocationName || N_A,
+      value: neighborhoodService.schoolDistrictLocationName || N_A,
     },
     {
       label: 'elementary',
-      value: Neighborhood.elementarySchool || N_A,
+      value: neighborhoodService.elementarySchool || N_A,
     },
     {
       label: 'lot dimensions',
-      value: Property.getLotDimensionsFormatted(lotDimensionFormatter),
+      value: propertyService.getLotDimensionsFormatted(lotDimensionFormatter),
     },
     {
       label: 'lot square footage',
-      value: Property.sqFootLot,
+      value: propertyService.sqFootLot,
     },
     {
       label: 'cross streets',
@@ -78,11 +76,11 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     },
     {
       label: 'amenities',
-      value: Neighborhood.getAmenityNamesFormatted(joinWithComma),
+      value: neighborhoodService.getAmenityNamesFormatted(joinWithComma),
     },
     {
       label: 'additional info',
-      value: Property.isPoolCompatible
+      value: propertyService.isPoolCompatible
         ? 'pool compatible'
         : 'not pool compatible',
     },
@@ -122,9 +120,10 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       const label = item.label
       const value = item.value || 'N/A'
       const showDivider = cells.length === 2 && index === 0
+
       return (
-        <>
-          <PropertyDetailsCardDataGridRowCell key={index}>
+        <Fragment key={`${rowIndex}-${index}`}>
+          <PropertyDetailsCardDataGridRowCell>
             <PropertyDetailsCardDataGridRowCellLabel>
               {label}
             </PropertyDetailsCardDataGridRowCellLabel>
@@ -135,7 +134,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
           {showDivider && (
             <Divider className={styles.divider} direction={'vertical'} />
           )}
-        </>
+        </Fragment>
       )
     }
     return (
@@ -201,30 +200,38 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     )
 
   const renderFloorPlanCarousel = () => {
+    if (!floorPlanService.images || !floorPlanService.images.length) return null
+
     const buttonLabelFormatter = (index: number) => {
       return `${getOrdinalSuffix(index + 1)} Floor`
     }
 
-    const slides = FloorPlan.images.map((attachment) =>
+    const slides = floorPlanService.images.map((attachment) =>
       renderSliderImage({ attachment, width: 756, height: 1092 })
     )
 
     return (
       <>
-        {renderCarouselTitle(FloorPlan.name)}
+        {renderCarouselTitle(floorPlanService.name)}
         <div className={styles.floorPlanIconLabelContainer}>
           <div className={styles.floorPlanIconLabelWrapper}>
-            <IconLabel icon={<Icons.Square />} value={FloorPlan.name} />
+            <IconLabel icon={<Icons.Square />} value={floorPlanService.name} />
           </div>
 
           <Divider direction={'vertical'} />
           <div className={styles.floorPlanIconLabelWrapper}>
-            <IconLabel icon={<Icons.Bed />} value={Property.houseStyleName} />
+            <IconLabel
+              icon={<Icons.Bed />}
+              value={propertyService.houseStyleName}
+            />
           </div>
 
           <Divider direction={'vertical'} />
           <div className={styles.floorPlanIconLabelWrapper}>
-            <IconLabel icon={<Icons.Bath />} value={Property.houseStyleName} />
+            <IconLabel
+              icon={<Icons.Bath />}
+              value={propertyService.houseStyleName}
+            />
           </div>
         </div>
 
@@ -240,13 +247,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }
 
   const renderSalesImageCarousel = () => {
-    if (!Neighborhood.titleImage) return null
+    if (!neighborhoodService.titleImage) return null
     return (
       <>
-        {renderCarouselTitle(Neighborhood.name)}
+        {renderCarouselTitle(neighborhoodService.name)}
         <div className={styles.carouselWrapper}>
           {renderSliderImage({
-            attachment: Neighborhood.titleImage,
+            attachment: neighborhoodService.titleImage,
             width: 688,
             height: 448,
           })}
@@ -256,7 +263,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }
 
   const renderDroneImageCarousel = () => {
-    if (!Neighborhood.droneImage) return null
+    if (!neighborhoodService.droneImage) return null
 
     return (
       <>
@@ -264,7 +271,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
 
         <div className={styles.carouselWrapper}>
           {renderSliderImage({
-            attachment: Neighborhood.droneImage,
+            attachment: neighborhoodService.droneImage,
             width: 688,
             height: 448,
           })}
@@ -274,10 +281,10 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }
 
   const renderNeighborhoodImagesCarousel = () => {
-    if (!Neighborhood.hasRestNeighborhoodImages) return null
+    if (!neighborhoodService.hasRestNeighborhoodImages) return null
 
-    const slides = Neighborhood.restNeighborhoodImages.map((attachment) =>
-      renderSliderImage({ attachment, width: 688, height: 448 })
+    const slides = neighborhoodService.restNeighborhoodImages.map(
+      (attachment) => renderSliderImage({ attachment, width: 688, height: 448 })
     )
     return (
       <>
@@ -294,11 +301,12 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   }
 
   const renderImageTitle = () => {
+    if (!propertyService.propertyImageUrl) return null
     return (
       <figure className={styles.imageTitleWrapper}>
         <Image
-          src={Property.propertyImageUrl}
-          alt={'Property Image'}
+          src={propertyService.propertyImageUrl}
+          alt={'propertyService Image'}
           width={590}
           height={370}
           placeholder={'blur'}
@@ -312,13 +320,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     return (
       <PropertyDetailsCardHeader>
         <div>
-          <PropertyDetailsCardPrice content={Property.price} />
-          <PropertyDetailsCardAddress content={Property.streetAddress} />
+          <PropertyDetailsCardPrice content={propertyService.price} />
+          <PropertyDetailsCardAddress content={propertyService.streetAddress} />
         </div>
         <div>
           <PropertyDetailsCardHeaderClosing
             label={'est. closing'}
-            value={Property.estimatedClosingDate}
+            value={propertyService.estimatedClosingDate}
           />
         </div>
       </PropertyDetailsCardHeader>
@@ -330,13 +338,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       <PropertyDetailsCardIconLabelContainer>
         <IconLabel
           icon={<Icons.FloorPlanColored />}
-          value={FloorPlan.name}
+          value={floorPlanService.name}
           background={'white'}
         />
         <Divider direction={'vertical'} />
         <IconLabel
           icon={<Icons.PaintBrushColored />}
-          value={Property.houseStyleName}
+          value={propertyService.houseStyleName}
           background={'white'}
         />
       </PropertyDetailsCardIconLabelContainer>
@@ -346,24 +354,23 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
   const renderPropertyCardButtonContainer = () => {
     return (
       <PropertyDetailsCardButtonContainer>
-        <PropertyDetailsCardButtonContainerBlock>
+        <PropertyDetailsCardButtonContainerBlock key={1}>
           <Button
             variant={'outlined'}
             onClick={() => {
-              window.open(FloorPlan.tourLink, '_blank')
+              window.open(floorPlanService.tourLink, '_blank')
             }}
           >
             book a tour
           </Button>
           <Button variant={'outlined'}>email summary</Button>
         </PropertyDetailsCardButtonContainerBlock>
-        <PropertyDetailsCardButtonContainerBlock>
+        <PropertyDetailsCardButtonContainerBlock key={2}>
           <Button variant={'contained'}>reserve now</Button>
         </PropertyDetailsCardButtonContainerBlock>
       </PropertyDetailsCardButtonContainer>
     )
   }
-  console.log(property)
 
   return (
     <div className={styles.root}>
@@ -371,7 +378,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
 
       <PropertyDetailsCard>
         {renderPropertyCardHeader()}
-        <PropertyDetailsCardDescription content={Neighborhood.name} />
+        <PropertyDetailsCardDescription content={neighborhoodService.name} />
         {renderPropertyCardLabels()}
         {renderPropertyCardButtonContainer()}
 

@@ -34,7 +34,7 @@ export const SearchInput = (props: AriaTextFieldProps) => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.icon}>
+      <div className={styles.icon} data-testid='search-icon'>
         <Icons.Search />
       </div>
 

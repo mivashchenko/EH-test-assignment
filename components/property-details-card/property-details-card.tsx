@@ -19,12 +19,14 @@ const PropertyDetailsCardHeaderClosing = ({
   value: string
 }) => {
   return (
-    <div className={styles.headerClosing}>
-      <div className={styles.headerClosingLabel}>{label}</div>
-      <div className={styles.headerClosingValue}>
-        {format(value, 'MMMM d, yyyy')}
+    value && (
+      <div className={styles.headerClosing}>
+        <div className={styles.headerClosingLabel}>{label}</div>
+        <div className={styles.headerClosingValue}>
+          {format(value, 'MMMM d, yyyy')}
+        </div>
       </div>
-    </div>
+    )
   )
 }
 

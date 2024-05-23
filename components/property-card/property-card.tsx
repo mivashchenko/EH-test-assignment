@@ -30,16 +30,20 @@ const PropertyCardHeadLabels = ({
 }: PropertyCardHeadLabelsProps) => {
   return (
     <div className={styles.headLabels}>
-      <IconLabel
-        icon={<Icons.FloorPlan />}
-        value={floorPlanName}
-        background={'grey'}
-      />
-      <IconLabel
-        icon={<Icons.PaintBrush />}
-        value={houseStyleName}
-        background={'grey'}
-      />
+      {floorPlanName && (
+        <IconLabel
+          icon={<Icons.FloorPlan />}
+          value={floorPlanName}
+          background={'grey'}
+        />
+      )}
+      {houseStyleName && (
+        <IconLabel
+          icon={<Icons.PaintBrush />}
+          value={houseStyleName}
+          background={'grey'}
+        />
+      )}
     </div>
   )
 }

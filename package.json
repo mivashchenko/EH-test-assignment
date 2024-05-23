@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watch --silent"
   },
   "dependencies": {
     "@types/ramda": "^0.30.0",
@@ -24,14 +25,19 @@
     "use-debounce": "^10.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
     "@types/date-fns": "^2.6.0",
     "@types/node": "^20",
     "@types/pluralize": "^0.0.33",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.3",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.5.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "pluralize": "^8.0.0",
     "prettier": "^3.2.5",
     "sass": "^1.77.2",

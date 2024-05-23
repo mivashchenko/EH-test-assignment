@@ -18,11 +18,9 @@ import {
   PropertyCardHeadLabels,
 } from '@/components/property-card/property-card'
 import { clsx } from 'clsx'
-import {
-  FloorPlanService,
-  NeighborhoodService,
-  PropertyService,
-} from '@/services/property'
+import { PropertyService } from '@/services/property'
+import { FloorPlanService } from '@/services/floor-plan'
+import { NeighborhoodService } from '@/services/neighborhood'
 
 interface PropertyListProps {
   propertyList: Property[]

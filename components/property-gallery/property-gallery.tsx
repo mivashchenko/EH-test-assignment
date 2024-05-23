@@ -1,5 +1,4 @@
 'use client'
-
 import { SearchInput } from '@/components/ui/search-input'
 import { PropertyList } from '@/components/property-list'
 import {
