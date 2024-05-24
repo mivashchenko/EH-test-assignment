@@ -31,7 +31,7 @@
   justify-content: flex-end;
 
   &Label {
-    font-size: 12px;
+    font-size: $fontSizeSmall;
     font-weight: $fontWeightRegular;
     color: $grey3;
     text-transform: uppercase;
@@ -53,7 +53,7 @@
 }
 
 .address {
-  font-size: 14px;
+  font-size: $fontSizeRegular;
   font-weight: $fontWeightBold;
   line-height: 14px;
   text-align: left;
@@ -61,7 +61,7 @@
 }
 
 .description {
-  font-size: 12px;
+  font-size: $fontSizeSmall;
   font-weight: $fontWeightLight;
   line-height: 12px;
   text-align: left;
@@ -117,7 +117,7 @@
 }
 
 .dataGridRowCellLabel {
-  font-size: 12px;
+  font-size: $fontSizeSmall;
   font-weight: $fontWeightRegular;
   color: $grey3;
   text-transform: uppercase;

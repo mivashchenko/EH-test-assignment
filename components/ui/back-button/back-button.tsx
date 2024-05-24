@@ -10,8 +10,14 @@ export const BackButton = (
   >
 ) => {
   return (
-    <button {...props} className={clsx(styles.root, props.className)}>
-      <Icons.BackButton />
+    <button
+      {...props}
+      className={clsx(styles.root, props.className)}
+      onClick={props.onClick}
+    >
+      <div className={clsx(styles.button, props.className)}>
+        <Icons.BackButton />
+      </div>
     </button>
   )
 }

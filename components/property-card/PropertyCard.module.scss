@@ -93,7 +93,7 @@
 }
 
 .address {
-  font-size: 14px;
+  font-size: $fontSizeRegular;
   font-weight: $fontWeightBold;
   line-height: 14px;
   text-align: left;
@@ -101,7 +101,7 @@
 }
 
 .description {
-  font-size: 12px;
+  font-size: $fontSizeSmall;
   font-weight: $fontWeightLight;
   line-height: 12px;
   text-align: left;
@@ -122,7 +122,7 @@
   border-radius: 4px;
   background: rgba($white, 10%);
   padding: 4px 8px;
-  font-size: 12px;
+  font-size: $fontSizeSmall;
   color: $white;
   text-align: center;
 }

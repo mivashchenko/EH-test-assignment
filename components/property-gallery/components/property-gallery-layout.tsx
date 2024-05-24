@@ -35,13 +35,16 @@ export const PropertyGalleryLayout = ({
 
   const [modalRoot, setModalRoot] = useState<Element | null>(null)
 
+  const hasWindow = typeof window !== 'undefined'
+
   useEffect(() => {
-    if (window === undefined) return
+    if (!hasWindow) return
+
     setModalRoot(window.document.getElementById('modal-root'))
   }, [])
 
   useEffect(() => {
-    if (window === undefined) return
+    if (!hasWindow) return
 
     if (mode === 'mobile' && detailsComponent) {
       window.document.body.style.overflow = 'hidden'

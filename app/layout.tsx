@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.scss'
+import { ReactNode } from 'react'
 
 const inter = Montserrat({ subsets: ['latin'] })
 
@@ -12,12 +13,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang='en'>
       <body className={inter.className}>{children}</body>
-      
     </html>
   )
 }
