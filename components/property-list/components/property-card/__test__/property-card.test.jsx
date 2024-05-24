@@ -1,17 +1,20 @@
 import { render, screen } from '@testing-library/react'
-import { PropertyCard } from '@/components/property-card/property-card'
-import { PropertyCardHead } from '@/components/property-card/property-card'
-import { PropertyCardHeadLabels } from '@/components/property-card/property-card'
-import { PropertyCardImage } from '@/components/property-card/property-card'
-import { PropertyCardContent } from '@/components/property-card/property-card'
-import { PropertyCardStatusLabel } from '@/components/property-card/property-card'
-import { PropertyCardPrice } from '@/components/property-card/property-card'
-import { PropertyCardAddress } from '@/components/property-card/property-card'
-import { PropertyCardDescription } from '@/components/property-card/property-card'
-import { PropertyCardChipValue } from '@/components/property-card/property-card'
-import { PropertyCardChipUnit } from '@/components/property-card/property-card'
-import { PropertyCardChip } from '@/components/property-card/property-card'
-import { PropertyCardChipContainer } from '@/components/property-card/property-card'
+
+import {
+  PropertyCardChipContainer,
+  PropertyCard,
+  PropertyCardHead,
+  PropertyCardHeadLabels,
+  PropertyCardImage,
+  PropertyCardContent,
+  PropertyCardStatusLabel,
+  PropertyCardPrice,
+  PropertyCardAddress,
+  PropertyCardDescription,
+  PropertyCardChipValue,
+  PropertyCardChipUnit,
+  PropertyCardChip,
+} from '@/components/property-list/components/property-card/property-card'
 
 it('should render without crashing when given default props', () => {
   render(<PropertyCard>Sample Content</PropertyCard>)
@@ -161,8 +164,7 @@ it('should render a PropertyCardChip for each valid detail', () => {
 })
 
 it('should render no PropertyCardChips when details array is empty', () => {
-  const details = []
-  render(<PropertyCardChipContainer details={details} />)
+  render(<PropertyCardChipContainer details={[]} />)
   const chips = screen.queryByText(/beds|baths/)
   expect(chips).toBeNull()
 })

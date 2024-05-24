@@ -1,6 +1,6 @@
 import styles from './PropertyDetailsCard.module.scss'
 import { ReactNode } from 'react'
-import { Divider } from '../ui/divider'
+import { Divider } from '../../../ui/divider'
 import { format } from 'date-fns'
 
 const PropertyDetailsCard = ({ children }: { children: ReactNode }) => {

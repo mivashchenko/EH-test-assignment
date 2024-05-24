@@ -1,5 +1,5 @@
 'use client'
-import styles from '@/components/property-gallery/components/PropertyGallery.module.scss'
+import styles from '@/components/property-gallery/components/property-gallery-layout/PropertyGallery.module.scss'
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { clsx } from 'clsx'
 import { BackButton } from '@/components/ui/back-button'

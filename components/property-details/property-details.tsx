@@ -14,11 +14,11 @@ import {
   PropertyDetailsCardHeaderClosing,
   PropertyDetailsCardIconLabelContainer,
   PropertyDetailsCardPrice,
-} from '@/components/property-details-card'
+} from '@/components/property-details/components/property-details-card'
 import { IconLabel } from '../ui/icon-label'
 import { Divider } from '@/components/ui/divider'
 import { Button, ButtonGroup } from '@/components/ui/button'
-import { PropertyDetailsCardDataGridContainer } from '@/components/property-details-card/property-details-card'
+import { PropertyDetailsCardDataGridContainer } from '@/components/property-details/components/property-details-card/property-details-card'
 import {
   carouselButtonLabelFormatter,
   joinWithComma,

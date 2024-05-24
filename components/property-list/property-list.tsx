@@ -9,14 +9,14 @@ import {
   PropertyCardHead,
   PropertyCardImage,
   PropertyCardPrice,
-} from '@/components/property-card'
+} from '@/components/property-list/components/property-card/property-card'
 import { Property } from '@/types'
 
 import styles from './PropertyList.module.scss'
 import {
   PropertyCard,
   PropertyCardHeadLabels,
-} from '@/components/property-card/property-card'
+} from '@/components/property-list/components/property-card/property-card'
 import { clsx } from 'clsx'
 import { PropertyService } from '@/services/property'
 import { FloorPlanService } from '@/services/floor-plan'

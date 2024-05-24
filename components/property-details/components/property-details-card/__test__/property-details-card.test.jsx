@@ -1,17 +1,19 @@
-import { render, screen } from '@testing-library/react'
-import { PropertyDetailsCard } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardHeader } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardHeaderClosing } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardPrice } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardAddress } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardDescription } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardIconLabelContainer } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardButtonContainer } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardButtonContainerBlock } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardDataGridContainer } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardDataGridRowCell } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardDataGridRowCellLabel } from '@/components/property-details-card/property-details-card'
-import { PropertyDetailsCardDataGridRowCellValue } from '@/components/property-details-card/property-details-card'
+import { render } from '@testing-library/react'
+import {
+  PropertyDetailsCardDataGridRowCellValue,
+  PropertyDetailsCard,
+  PropertyDetailsCardHeader,
+  PropertyDetailsCardHeaderClosing,
+  PropertyDetailsCardPrice,
+  PropertyDetailsCardAddress,
+  PropertyDetailsCardDescription,
+  PropertyDetailsCardIconLabelContainer,
+  PropertyDetailsCardButtonContainer,
+  PropertyDetailsCardButtonContainerBlock,
+  PropertyDetailsCardDataGridContainer,
+  PropertyDetailsCardDataGridRowCell,
+  PropertyDetailsCardDataGridRowCellLabel,
+} from '@/components/property-details/components/property-details-card'
 
 it('should render a div with the provided children', () => {
   const { container } = render(
