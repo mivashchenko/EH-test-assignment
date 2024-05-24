@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
-import './globals.scss'
+import './styles/globals.scss'
 import { ReactNode } from 'react'
 
 const inter = Montserrat({ subsets: ['latin'] })
