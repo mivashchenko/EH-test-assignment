@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { PropertyGalleryLayout } from '@/components/property-gallery/components/property-gallery-layout'
 import { useScreenSize } from '@/hooks/useScreenSize'
 import { useTransition } from 'react'
+import { MOBILE_SCREEN_SIZE } from '@/constant'
 
 interface PropertyGalleryProps {
   propertyList: Property[]
@@ -26,8 +27,10 @@ export const PropertyGallery = ({
 
   const [searchText, setSearchText] = useState<string>('')
 
+  const isMobile = screenSize.width <= MOBILE_SCREEN_SIZE
+
   useEffect(() => {
-    if (screenSize.width > 768) {
+    if (!isMobile) {
       setSelectedProperty(propertyList[0])
     }
   }, [])
@@ -35,8 +38,6 @@ export const PropertyGallery = ({
   const handleSelectProperty = useCallback((property: Property) => {
     setSelectedProperty(property)
   }, [])
-
-  const isMobile = screenSize.width <= 768
 
   useEffect(() => {
     if (isMobile) {
@@ -74,7 +75,6 @@ export const PropertyGallery = ({
 
   return (
     <PropertyGalleryLayout
-      mode={screenSize.width <= 768 ? 'mobile' : 'desktop'}
       onBackButtonClick={handleBackButtonClick}
       searchComponent={
         <SearchInput

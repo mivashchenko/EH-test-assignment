@@ -21,6 +21,7 @@ import { clsx } from 'clsx'
 import { PropertyService } from '@/services/property'
 import { FloorPlanService } from '@/services/floor-plan'
 import { NeighborhoodService } from '@/services/neighborhood'
+import { useEffect, useMemo } from 'react'
 
 interface PropertyListProps {
   propertyList: Property[]
@@ -33,67 +34,72 @@ export const PropertyList = ({
   onSelectProperty,
   selectedProperty,
 }: PropertyListProps) => {
-  const createCardClickHandler = (property: Property) => {
-    return () => {
-      if (onSelectProperty) {
-        onSelectProperty(property)
-      }
+  const createCardClickListener = (property: Property) => () => {
+    if (onSelectProperty) {
+      onSelectProperty(property)
     }
   }
 
-  const SelectedProperty = new PropertyService()
-  SelectedProperty.setProperty(selectedProperty)
+  const selectedPropertyService = useMemo(() => new PropertyService(), [])
+  const propertyService = useMemo(() => new PropertyService(), [])
+  const floorPlanService = useMemo(() => new FloorPlanService(), [])
+  const neighborhoodService = useMemo(() => new NeighborhoodService(), [])
 
-  const IteratedProperty = new PropertyService()
-  const IteratedFloorPlan = new FloorPlanService()
-  const IteratedNeighborhood = new NeighborhoodService()
+  selectedPropertyService.setProperty(selectedProperty)
+
+  useEffect(() => {
+    selectedPropertyService.setProperty(selectedProperty)
+  }, [selectedProperty])
 
   return (
     <div className={styles.root}>
       {propertyList.map((property: Property, idx: number) => {
-        IteratedProperty.setProperty(property)
-        IteratedFloorPlan.setFloorPlan(IteratedProperty.floorPlan)
-        IteratedNeighborhood.setNeighborhood(IteratedProperty.neighborhood)
+        propertyService.setProperty(property)
+        floorPlanService.setFloorPlan(propertyService.floorPlan)
+        neighborhoodService.setNeighborhood(propertyService.neighborhood)
 
         const details = [
           {
-            value: IteratedFloorPlan.sqFootMasonry,
-            unit: IteratedFloorPlan.sqFootMasonryUnit,
+            value: floorPlanService.sqFootMasonry,
+            unit: floorPlanService.sqFootMasonryUnit,
           },
           {
-            value: IteratedFloorPlan.bedrooms,
-            unit: IteratedFloorPlan.bedroomsUnit,
+            value: floorPlanService.bedrooms,
+            unit: floorPlanService.bedroomsUnit,
           },
           {
-            value: IteratedFloorPlan.baths,
-            unit: IteratedFloorPlan.bathsUnit,
+            value: floorPlanService.baths,
+            unit: floorPlanService.bathsUnit,
           },
         ]
+
+        const listItemClassName = clsx(
+          styles.item,
+          selectedPropertyService.isTheSameAs(propertyService) &&
+            styles.selected
+        )
 
         return (
           <article
             key={property.streetAddress + idx}
-            className={clsx(
-              styles.item,
-              SelectedProperty.isTheSameAs(IteratedProperty) && styles.selected
-            )}
-            onClick={createCardClickHandler(property)}
+            className={listItemClassName}
+            onClick={createCardClickListener(property)}
           >
             <PropertyCard>
               <PropertyCardHead>
                 <PropertyCardHeadLabels
-                  floorPlanName={IteratedFloorPlan.name}
-                  houseStyleName={IteratedFloorPlan.name}
+                  floorPlanName={floorPlanService.name}
+                  houseStyleName={floorPlanService.name}
                 />
               </PropertyCardHead>
-              <PropertyCardImage src={IteratedProperty.propertyImageUrl} />
+              <PropertyCardImage src={propertyService.propertyImageUrl} />
               <PropertyCardContent>
                 <PropertyCardStatusLabel
-                  content={IteratedProperty.constructionStatus}
+                  content={propertyService.constructionStatus}
                 />
-                <PropertyCardPrice content={IteratedProperty.price} />
-                <PropertyCardAddress content={IteratedProperty.streetAddress} />
-                <PropertyCardDescription content={IteratedNeighborhood.name} />
+                <PropertyCardPrice content={propertyService.price} />
+                <PropertyCardAddress content={propertyService.streetAddress} />
+                <PropertyCardDescription content={neighborhoodService.name} />
                 <PropertyCardChipContainer details={details} />
               </PropertyCardContent>
             </PropertyCard>

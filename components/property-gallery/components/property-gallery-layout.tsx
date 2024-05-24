@@ -5,12 +5,13 @@ import { clsx } from 'clsx'
 import { BackButton } from '@/components/ui/back-button'
 import { animated, useTransition } from 'react-spring'
 import { createPortal } from 'react-dom'
+import { useScreenSize } from '@/hooks/useScreenSize'
+import { MOBILE_SCREEN_SIZE } from '@/constant'
 
 interface PropertyGalleryLayoutProps {
   searchComponent: ReactNode
   listComponent: ReactNode
   detailsComponent: ReactNode
-  mode?: 'mobile' | 'desktop'
   onBackButtonClick?: () => void
 }
 
@@ -18,15 +19,8 @@ export const PropertyGalleryLayout = ({
   searchComponent,
   listComponent,
   detailsComponent,
-  mode = 'desktop',
   onBackButtonClick,
 }: PropertyGalleryLayoutProps) => {
-  const handleBackButtonClick = () => {
-    if (onBackButtonClick) {
-      onBackButtonClick?.()
-    }
-  }
-
   const transition = useTransition(detailsComponent, {
     from: { opacity: 0, x: -400, y: 0 },
     enter: { opacity: 1, x: 0, y: 0 },
@@ -35,7 +29,10 @@ export const PropertyGalleryLayout = ({
 
   const [modalRoot, setModalRoot] = useState<Element | null>(null)
 
+  const screenSize = useScreenSize()
   const hasWindow = typeof window !== 'undefined'
+
+  const isMobile = screenSize.width <= MOBILE_SCREEN_SIZE
 
   useEffect(() => {
     if (!hasWindow) return
@@ -43,59 +40,61 @@ export const PropertyGalleryLayout = ({
     setModalRoot(window.document.getElementById('modal-root'))
   }, [])
 
+  const setBodyOverflow = (value: string) => {
+    window.document.body.style.overflow = value
+  }
+
   useEffect(() => {
     if (!hasWindow) return
 
-    if (mode === 'mobile' && detailsComponent) {
-      window.document.body.style.overflow = 'hidden'
+    if (isMobile && detailsComponent) {
+      setBodyOverflow('hidden')
     } else {
-      window.document.body.style.overflow = 'initial'
+      setBodyOverflow('initial')
     }
 
     return () => {
-      if (window === undefined) return
-      window.document.body.style.overflow = 'initial'
+      if (!hasWindow) return
+      setBodyOverflow('initial')
     }
-  }, [detailsComponent, mode])
+  }, [detailsComponent])
 
-  const renderDetailsComponentModal = () => {
-    return transition((style, item) =>
+  const withAnimation = (component: ReactNode) =>
+    transition((style, item) =>
       item ? (
-        <animated.div style={style} className={styles.item}>
-          {detailsComponent}
+        <animated.div style={style} className={styles.animatedItem}>
+          {component}
         </animated.div>
       ) : null
     )
+
+  const handleBackButtonClick = () => {
+    if (onBackButtonClick) {
+      onBackButtonClick?.()
+    }
   }
 
   return (
     <div className={styles.root}>
       <div className={clsx(styles.contentLeft)}>
         <div className={styles.search}>{searchComponent}</div>
-        <div
-          style={{
-            overflow:
-              mode === 'mobile' && detailsComponent ? 'hidden' : 'unset',
-          }}
-        >
-          {listComponent}
-        </div>
+        {listComponent}
       </div>
 
-      {mode === 'desktop' && (
+      {!isMobile && (
         <div className={clsx(styles.contentRightDesktop)}>
           {detailsComponent}
         </div>
       )}
 
-      {mode === 'mobile' &&
+      {isMobile &&
         detailsComponent &&
         createPortal(
           <div className={clsx(styles.contentRightMobile)}>
             <div className={styles.backButtonContainer}>
               <BackButton onClick={handleBackButtonClick} />
             </div>
-            {renderDetailsComponentModal()}
+            {withAnimation(detailsComponent)}
           </div>,
           modalRoot as Element
         )}
