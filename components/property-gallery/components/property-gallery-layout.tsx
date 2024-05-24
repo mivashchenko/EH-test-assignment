@@ -1,6 +1,6 @@
 'use client'
 import styles from '@/components/property-gallery/components/PropertyGallery.module.scss'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { clsx } from 'clsx'
 import { BackButton } from '@/components/ui/back-button'
 import { animated, useTransition } from 'react-spring'
@@ -74,6 +74,38 @@ export const PropertyGalleryLayout = ({
     }
   }
 
+  const ref = useRef<HTMLDivElement>(null)
+
+  const handleRightContainerScroll = useCallback((event: WheelEvent) => {
+    if (event.deltaY < 0) {
+      // console.log('scrolling up')
+      if (ref.current) {
+        // console.dir(ref.current)
+        // ref.current.style.top = '0px'
+        // ref.current.style.alignSelf = 'initial'
+      }
+    } else if (event.deltaY > 0) {
+      // console.log('scrolling down')
+    }
+  }, [])
+
+  useEffect(() => {
+    const currentRef = ref.current
+    if (currentRef) {
+      currentRef.addEventListener('wheel', handleRightContainerScroll)
+    }
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener('wheel', handleRightContainerScroll)
+      }
+    }
+  }, [handleRightContainerScroll])
+
+  useEffect(() => {
+    if (!ref.current) return
+    ref.current.addEventListener('wheel', handleRightContainerScroll)
+  }, [ref.current])
+
   return (
     <div className={styles.root}>
       <div className={clsx(styles.contentLeft)}>
@@ -82,7 +114,7 @@ export const PropertyGalleryLayout = ({
       </div>
 
       {!isMobile && (
-        <div className={clsx(styles.contentRightDesktop)}>
+        <div className={clsx(styles.contentRightDesktop)} ref={ref}>
           {detailsComponent}
         </div>
       )}
