@@ -1,4 +1,4 @@
-import styles from './home-page.module.scss'
+import styles from './HomePage.module.scss'
 import { Logo } from '@/components/logo/logo'
 import { getPropertyList } from '@/data/propertyList'
 import { PropertyGallery } from '@/components/property-gallery'

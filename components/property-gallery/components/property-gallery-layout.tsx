@@ -81,7 +81,7 @@ export const PropertyGalleryLayout = ({
 
       {mode === 'desktop' && (
         <div className={clsx(styles.contentRightDesktop)}>
-          <div>{detailsComponent}</div>
+          {detailsComponent}
         </div>
       )}
 

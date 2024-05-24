@@ -1,7 +1,6 @@
 
 .root {
   display: flex;
-  gap: 16px;
   width: 100%;
 }
 
@@ -15,6 +14,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 50%;
+  padding: 0  16px 0 16px;
 }
 
 .contentRightDesktop {
